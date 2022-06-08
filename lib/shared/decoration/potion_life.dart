@@ -1,0 +1,31 @@
+import 'package:bonfire/bonfire.dart';
+
+import '../map/dungeon_map.dart';
+import '../sheet/common_sprite_sheet.dart';
+
+class PotionLife extends GameDecoration with Sensor {
+  final double life;
+  double _lifeDistributed = 0;
+
+  PotionLife(Vector2 position, this.life)
+      : super.withSprite(
+          sprite: CommonSpriteSheet.potionLifeSprite,
+          position: position,
+          size: Vector2.all(DungeonMap.tileSize * 0.5),
+        );
+
+  @override
+  void onContact(GameComponent component) {
+    if (component is Player) {
+      gameRef.getValueGenerator(const Duration(seconds: 1), onChange: (value) {
+        if (_lifeDistributed < life) {
+          double newLife = life * value - _lifeDistributed;
+          _lifeDistributed += newLife;
+          component.addLife(newLife);
+        }
+      }).start();
+
+      removeFromParent();
+    }
+  }
+}
