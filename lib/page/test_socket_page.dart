@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rpg_game_2d/utils/socket_utils.dart';
+import 'package:web_socket_channel/io.dart';
 
 class TestSocketPage extends StatefulWidget {
   const TestSocketPage({Key? key}) : super(key: key);
@@ -8,6 +10,21 @@ class TestSocketPage extends StatefulWidget {
 }
 
 class _TestSocketPageState extends State<TestSocketPage> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("----初始化");
+    SocketUtils().initSocket();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    SocketUtils().dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,9 +36,7 @@ class _TestSocketPageState extends State<TestSocketPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () => {
-
-      }),
+      floatingActionButton: FloatingActionButton(onPressed: () => {}),
     );
   }
 }
