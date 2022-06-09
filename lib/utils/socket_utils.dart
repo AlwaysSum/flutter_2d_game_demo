@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:rpg_game_2d/utils/pomeoe_protocol.dart';
+import 'package:rpg_game_2d/utils/pomelo_protocol.dart';
 import 'package:web_socket_channel/io.dart';
 import 'dart:convert' as convert;
 
