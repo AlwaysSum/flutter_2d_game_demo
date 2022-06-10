@@ -7,9 +7,11 @@ import 'package:rpg_game_2d/shared/player/knight_controller.dart';
 import 'page/home_page.dart';
 import 'shared/enemy/goblin_controller.dart';
 import 'shared/interface/bar_life_controller.dart';
+import 'shared/sounds/sounds_manager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SoundsManager.initialize();
   if (!kIsWeb) {
     await Flame.device.setLandscape();
     await Flame.device.fullScreen();

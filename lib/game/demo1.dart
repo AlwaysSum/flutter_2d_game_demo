@@ -10,12 +10,18 @@ import '../shared/decoration/nail.dart';
 import '../shared/enemy/goblin.dart';
 import '../shared/interface/bar_life_widget.dart';
 import '../shared/interface/knight_interface.dart';
+import '../shared/sounds/sounds_manager.dart';
 
 class Demo1Game extends StatelessWidget  implements GameListener{
   const Demo1Game({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
+    //播放音乐
+    SoundsManager.playChopinRevelation();
+
     return BonfireTiledWidget(
       //控制器
       joystick: Joystick(

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rpg_game_2d/shared/player/knight.dart';
 
+import '../sounds/sounds_manager.dart';
+
 /// 骑士的控制器
 class KnightController extends StateController<Knight> {
   bool executingRangeAttack = false;
@@ -13,7 +15,6 @@ class KnightController extends StateController<Knight> {
   num? maxLife;
   bool isFirst = true;
 
-
   @override
   void onReady(Knight component) {
     debugPrint("血量:$life $isFirst");
@@ -21,7 +22,7 @@ class KnightController extends StateController<Knight> {
       life ??= component.life;
       maxLife ??= component.maxLife;
       isFirst = false;
-    }else{
+    } else {
       component.initialLife(maxLife!.toDouble());
       component.life = life!.toDouble();
     }
@@ -29,7 +30,6 @@ class KnightController extends StateController<Knight> {
 
   @override
   void update(double dt, Knight component) {
-
     life = component.life;
     maxLife = component.maxLife;
     //间隔检测
