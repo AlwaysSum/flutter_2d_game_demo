@@ -14,7 +14,7 @@
  "name":"0x72_DungeonTilesetII_v1.3",
  "spacing":0,
  "tilecount":1024,
- "tiledversion":"1.5.0",
+ "tiledversion":"1.8.5",
  "tileheight":16,
  "tiles":[
         {
@@ -407,6 +407,65 @@
             }
         }, 
         {
+         "animation":[
+                {
+                 "duration":100,
+                 "tileid":119
+                }, 
+                {
+                 "duration":100,
+                 "tileid":120
+                }, 
+                {
+                 "duration":100,
+                 "tileid":121
+                }, 
+                {
+                 "duration":100,
+                 "tileid":122
+                }, 
+                {
+                 "duration":100,
+                 "tileid":123
+                }, 
+                {
+                 "duration":100,
+                 "tileid":124
+                }, 
+                {
+                 "duration":100,
+                 "tileid":125
+                }, 
+                {
+                 "duration":100,
+                 "tileid":126
+                }],
+         "id":127,
+         "objectgroup":
+            {
+             "draworder":"index",
+             "id":2,
+             "name":"",
+             "objects":[
+                    {
+                     "height":13.3165753957567,
+                     "id":4,
+                     "name":"gobin",
+                     "rotation":0,
+                     "type":"",
+                     "visible":true,
+                     "width":13.1669509531077,
+                     "x":1.49624442648951,
+                     "y":1.19699554119161
+                    }],
+             "opacity":1,
+             "type":"objectgroup",
+             "visible":true,
+             "x":0,
+             "y":0
+            }
+        }, 
+        {
          "id":129,
          "type":"ground"
         }, 
@@ -697,7 +756,6 @@
          "objectgroup":
             {
              "draworder":"index",
-             "id":2,
              "name":"",
              "objects":[
                     {
@@ -795,7 +853,6 @@
          "objectgroup":
             {
              "draworder":"index",
-             "id":2,
              "name":"",
              "objects":[
                     {
@@ -952,5 +1009,5 @@
         }],
  "tilewidth":16,
  "type":"tileset",
- "version":1.5
+ "version":"1.8"
 }

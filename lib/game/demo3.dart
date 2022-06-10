@@ -10,18 +10,12 @@ import '../shared/decoration/nail.dart';
 import '../shared/enemy/goblin.dart';
 import '../shared/interface/bar_life_widget.dart';
 import '../shared/interface/knight_interface.dart';
-import '../shared/sounds/sounds_manager.dart';
 
-class Demo1Game extends StatelessWidget  implements GameListener{
-  const Demo1Game({Key? key}) : super(key: key);
-
-
+class Demo3Game extends StatelessWidget implements GameListener {
+  const Demo3Game({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    //播放音乐
-    // SoundsManager.playChopinRevelation();
-
     return BonfireTiledWidget(
       //控制器
       joystick: Joystick(
@@ -43,20 +37,13 @@ class Demo1Game extends StatelessWidget  implements GameListener{
       ),
       //地图
       map: TiledWorldMap(
-        // 'tiled/mapa1.json',
-        'tiled/demo1/demo1.json',
+        'tiled/demo1/demo3.json',
         forceTileSize: const Size(32, 32),
         objectsBuilder: {
           "goblin": (properties) => Goblin(properties.position),
-          "nail": (properties) =>
-              Nail(position: properties.position, size: properties.size),
+          // "Demon": (properties) => Goblin(properties.position),
           "wall": (properties) =>
               Wall(position: properties.position, size: properties.size),
-          "chest": (properties) =>
-              // Chest.newByMap(position: properties.position, size: properties.size),
-              Chest(properties.position),
-          "tunnel": (properties) =>
-              Tunnel(position: properties.position, size: properties.size),
         },
       ),
       interface: KnightInterface(),
@@ -81,7 +68,7 @@ class Demo1Game extends StatelessWidget  implements GameListener{
       //显示碰撞区域
       // showCollisionArea: true,
       //热重载开启
-      // constructionMode: true,
+      constructionMode: true,
       //显示FPS
       showFPS: true,
       //显示加载地图进度
@@ -90,10 +77,8 @@ class Demo1Game extends StatelessWidget  implements GameListener{
   }
 
   @override
-  void changeCountLiveEnemies(int count) {
-  }
+  void changeCountLiveEnemies(int count) {}
 
   @override
-  void updateGame() {
-  }
+  void updateGame() {}
 }
