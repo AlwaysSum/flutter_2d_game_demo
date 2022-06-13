@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:rpg_game_2d/utils/pomelo_protocol.dart';
 import 'package:web_socket_channel/io.dart';
-import 'dart:convert' as convert;
 
 class SocketUtils {
   SocketUtils._internal() {}
@@ -31,30 +32,34 @@ class SocketUtils {
 
     if (_channel != null) {
       var data = PomeloProtocol.packageEncode(
-          PomeloProtocol.packageTypeHandshake, convert.jsonEncode(params));
+          PomeloProtocol.packageTypeHandshake,
+          Uint8List.fromList(jsonEncode(params).codeUnits));
       debugPrint("握手：${data}");
       _channel?.sink.add(data);
       _channel?.stream.listen(onData, onError: onError, onDone: onDone);
-      startCountdownTimer();
+      // startCountdownTimer();
     }
   }
 
   ///开启心跳
   void startCountdownTimer() {
-    const oneSec = Duration(seconds: 10);
+    const oneSec = Duration(microseconds: 30);
+    debugPrint("开启心跳...");
     callback(timer) async {
       if (_channel == null) {
         initSocket();
       } else {
-        debugPrint("开启心跳...");
-        // if(SpUtils().getUserInfo() != null){
-        //   _channel.sink
-        //       .add("10002${SpUtils().getUserInfo().appUserDetailsVO.drvId}");
-        // }
+        // debugPrint("发送心跳...");
+        _channel?.sink.add(PomeloProtocol.packageEncode(
+            PomeloProtocol.packageTypeHandshakeAck, null));
       }
     }
 
-    _timer = Timer.periodic(oneSec, callback);
+    //是否开启心跳
+    // _timer = Timer.periodic(oneSec, callback);
+    //第一次应答
+    _channel?.sink.add(PomeloProtocol.packageEncode(
+        PomeloProtocol.packageTypeHandshakeAck, null));
   }
 
   onDone() {
@@ -75,12 +80,13 @@ class SocketUtils {
         debugPrint("接收消息--1$event");
         event = PomeloProtocol.packageDecode(event);
         debugPrint("接收消息$event");
-        var body = const convert.JsonDecoder().convert(event['body'] ?? "{}");
+        var body = const JsonDecoder().convert(event['body'] ?? "{}");
         switch (event['type']) {
           case 1:
             if (body['code'] == 200) {
               debugPrint("---握手成功");
-            }else{
+              startCountdownTimer();
+            } else {
               debugPrint("---握手失败");
             }
             break;
@@ -88,7 +94,6 @@ class SocketUtils {
             debugPrint("---无响应");
             break;
         }
-
 
         // switch (event) {
         //   case "10001": //服务器回应正常
@@ -126,6 +131,26 @@ class SocketUtils {
     } catch (e) {
       debugPrint(e?.toString());
     }
+  }
+
+  ///发送一个消息
+  void sendMessage(int reqId, String route, String msg) {
+    int type =
+        reqId > 0 ? PomeloProtocol.typeRequest : PomeloProtocol.typeNotify;
+
+    var compressRoute = false;
+    // if (dict && dict[route]) {
+    //   route = dict[route];
+    //   compressRoute = 1;
+    // }
+    //发送消息
+    var encodeMsg =
+        PomeloProtocol.messageEncode(reqId, type, compressRoute, route, msg);
+    debugPrint("加密消息 $encodeMsg");
+    var sendMsg =
+        PomeloProtocol.packageEncode(PomeloProtocol.packageTypeData, encodeMsg);
+    debugPrint("最终发送消息 $sendMsg");
+    _channel?.sink.add(sendMsg);
   }
 
   void dispose() {

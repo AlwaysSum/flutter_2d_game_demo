@@ -23,6 +23,7 @@ class Demo1Game extends StatelessWidget  implements GameListener{
     // SoundsManager.playChopinRevelation();
 
     return BonfireTiledWidget(
+
       //控制器
       joystick: Joystick(
         keyboardConfig: KeyboardConfig(

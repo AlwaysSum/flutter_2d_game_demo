@@ -1,16 +1,20 @@
-import 'package:bonfire/bonfire.dart';
+import 'dart:async';
+
+import 'package:bonfire/bonfire.dart' hide Timer;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rpg_game_2d/shared/player/knight_controller.dart';
 import 'package:rpg_game_2d/shared/sheet/common_sprite_sheet.dart';
 import 'package:rpg_game_2d/shared/sheet/player_sheet.dart';
 
 import '../interface/bar_life_controller.dart';
 import '../map/dungeon_map.dart';
+import '../plugins/GravityObject.dart';
 
 enum PlayerAttackType { AttackMelee, AttackRange }
 
 class Knight extends SimplePlayer
-    with ObjectCollision, UseStateController<KnightController> {
+    with ObjectCollision, UseStateController<KnightController>, GravityObject {
   static const double maxSpeed = DungeonMap.tileSize * 3;
 
   BarLifeController? barLifeController;
@@ -52,7 +56,36 @@ class Knight extends SimplePlayer
     if (hasController) {
       controller.handleJoystickAction(event);
     }
+    if (event.id == LogicalKeyboardKey.space.keyId) {
+      if (event.event == ActionEvent.DOWN) {
+        jump();
+      }
+    }
     super.joystickAction(event);
+  }
+
+  bool isJumping = false;
+
+  void jump() {
+
+    if(!isJumping){
+      var curY = y;
+      bool isUp = true;
+      isJumping = true;
+      jumpCallBack(Timer timer) {
+        if (y <= curY - 100) {
+          isUp = false;
+        }
+        y = isUp ? y - 2 : y + 2;
+        if (!isUp && isJumping && y >= curY) {
+          isJumping = false;
+          y = curY;
+          timer.cancel();
+        }
+      }
+
+      Timer.periodic(const Duration(milliseconds: 10), jumpCallBack);
+    }
   }
 
   /// 渲染

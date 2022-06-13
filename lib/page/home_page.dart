@@ -1,9 +1,12 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rpg_game_2d/game/demo1.dart';
 import 'package:rpg_game_2d/game/demo3.dart';
 import 'package:rpg_game_2d/page/test_socket_page.dart';
 import 'package:rpg_game_2d/shared/sheet/player_sheet.dart';
+
+import 'dialogs.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -47,14 +50,18 @@ class HomePage extends StatelessWidget {
                   const Divider(),
                   //开始游戏2
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(primary:Colors.green),
+                    style: ElevatedButton.styleFrom(primary:Colors.redAccent),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                            return const Demo3Game();
-                          }));
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) {
+                      //       return const Demo3Game();
+                      //     }));
+                      Dialogs.showGameOver(context, () {
+                        EasyLoading.showInfo("游戏结束");
+                        Navigator.pop(context);
+                      });
                     },
-                    child: const Text("开始游戏-例子2"),
+                    child: const Text("游戏结束"),
                   ),
                   const Divider(),
                   //开始游戏2

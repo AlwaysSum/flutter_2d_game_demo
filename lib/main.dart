@@ -1,6 +1,7 @@
 import 'package:bonfire/bonfire.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rpg_game_2d/game/demo1.dart';
 import 'package:rpg_game_2d/shared/player/knight_controller.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: const Demo1Game(),
       home: const HomePage(),
+      builder: EasyLoading.init(),
     );
   }
 }

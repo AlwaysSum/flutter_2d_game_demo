@@ -10,8 +10,6 @@ class TestSocketPage extends StatefulWidget {
 }
 
 class _TestSocketPageState extends State<TestSocketPage> {
-
-
   @override
   void initState() {
     super.initState();
@@ -32,7 +30,13 @@ class _TestSocketPageState extends State<TestSocketPage> {
         color: Colors.green,
         child: Center(
           child: Column(
-            children: const [Text("Socket 测试")],
+            children: [
+              const Text("Socket 测试"),
+              MaterialButton(onPressed: () => {
+
+              },child: const Text("开始链接 socket"),),
+
+            ],
           ),
         ),
       ),

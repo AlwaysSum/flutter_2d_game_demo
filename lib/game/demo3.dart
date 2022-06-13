@@ -1,4 +1,5 @@
 import 'package:bonfire/bonfire.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:rpg_game_2d/page/loading_page.dart';
 import 'package:rpg_game_2d/shared/decoration/chest.dart';
@@ -50,19 +51,19 @@ class Demo3Game extends StatelessWidget implements GameListener {
       overlayBuilderMap: {
         'barLife': (context, game) => const BarLifeWidget(),
         'miniMap': (context, game) => MiniMap(
-              game: game,
-              margin: const EdgeInsets.all(20),
-              borderRadius: BorderRadius.circular(10),
-              size: Vector2.all(150),
-              border: Border.all(color: Colors.white.withOpacity(0.5)),
-            ),
+          game: game,
+          margin: const EdgeInsets.all(20),
+          borderRadius: BorderRadius.circular(10),
+          size: Vector2.all(150),
+          border: Border.all(color: Colors.white.withOpacity(0.5)),
+        ),
       },
       initialActiveOverlays: const [
         "barLife",
         "miniMap",
       ],
       //玩家角色
-      player: Knight(Vector2(160, 160)),
+      player: Knight(Vector2(40, 400)),
       //敌人
       ///--测试
       //显示碰撞区域
