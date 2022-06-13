@@ -14,7 +14,7 @@ import '../plugins/GravityObject.dart';
 enum PlayerAttackType { AttackMelee, AttackRange }
 
 class Knight extends SimplePlayer
-    with ObjectCollision, UseStateController<KnightController>, GravityObject {
+    with ObjectCollision,Lighting, UseStateController<KnightController> {
   static const double maxSpeed = DungeonMap.tileSize * 3;
 
   BarLifeController? barLifeController;
@@ -58,7 +58,7 @@ class Knight extends SimplePlayer
     }
     if (event.id == LogicalKeyboardKey.space.keyId) {
       if (event.event == ActionEvent.DOWN) {
-        jump();
+        // jump();
       }
     }
     super.joystickAction(event);
